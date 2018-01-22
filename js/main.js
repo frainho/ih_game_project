@@ -139,11 +139,30 @@ function main() {
 
     function loadTitleData() {
         buildModal();
-        modal.innerHTML += 'Hello There!'
+        var helloP = document.createElement('h2');
+        helloP.innerText = 'Hello!';
+        
+        var info = document.createElement('p');
+        info.innerText = ' Thank you so much for playing. This game was created by Filipe Rainho for the IronHack Game Project with help!';
+        modal.appendChild(helloP);
+        modal.appendChild(info);
+        //@TODO add IH image
     }
 
     function loadStatsData() {
         buildModal();
+        var statsTitle = document.createElement('h2');
+        statsTitle.innerText = 'Stats';
+
+        var moneyText = document.createElement('p');
+        moneyText.innerText = 'You made ' + playerData.money + ' so far. Reach 10000 to win!';
+
+        var speedText = document.createElement('p');
+        speedText.innerText = 'You need ' + playerData.speed + ' keystrokes in order to do a line of code. Check for upgrades to see if you can get faster!';
+
+        modal.appendChild(statsTitle);
+        modal.appendChild(moneyText);
+        modal.appendChild(speedText);
     }
 
     function loadNewProjectStarter() {
