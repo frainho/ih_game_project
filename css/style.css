@@ -1,0 +1,126 @@
+/* ---- reset ---- */
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+
+/* ---- typography ---- */
+
+body {
+    font-family: arcade-classic, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    display: table;
+    font-size: 100px;
+    margin: 0 auto;
+}
+
+@font-face {
+    font-family: arcade-classic;
+    src: url(../fonts/ARCADECLASSIC.TTF);
+}
+
+
+/* ---- layout ---- */
+
+body {
+    margin-top: 100px;
+    background-color: grey;
+    color: #f9f9f9;
+}
+
+#game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 640px;
+    height: 480px;
+    background-color: #FFA808;
+}
+
+.main-title {
+    margin-bottom: 25px;
+}
+
+
+/* ---- components ---- */
+
+button {
+    border: none;
+    padding: 15px 20px;
+    background-color: #059E8E;
+    color: white;
+    font-family: arcade-classic, Arial, Helvetica, sans-serif;
+}
+
+.start-btn {
+    display: table;
+    margin: 0 auto;
+}
+
+.new-player {
+    text-align: center;
+    display: table;
+    margin: 0 auto;
+}
+
+.new-player input {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    /*  */
+}
+
+.main-game-buttons {
+    width: 320px;
+    height: 90px;
+    background-color: #059E8E;
+    line-height: 90px;
+    font-size: 25px;
+    text-align: center;
+    border: 1px #FFA808 solid;
+    
+}
+
+.topMenu {
+    display:flex;
+}
+
+.centerMenu{
+    display:flex;
+    height: 210px;
+}
+
+.bottomMenu {
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.background-filter {
+    filter: blur(2px);
+}
+
+.modal {
+    margin: 0 auto;
+    background-color: #059E8E;
+    height: 375px;
+    width: 500px;
+    text-align: center;
+}
+
+.modal button {
+    background-color: #FFA808;
+}
