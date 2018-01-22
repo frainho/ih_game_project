@@ -19,7 +19,12 @@ function main() {
         modalBtn,
         selectedProject,
         projectName,
-        currentProject;
+        currentProject,
+        mainGameLProjectData,
+        mainGameRProjectData,
+        mainGameCProjectData,
+        projectLinesTbdInfo;
+    var keystrokes = 0; 
 
     //Get start button and add eventListener to start game
     startBtn.addEventListener('click', destroySplash);
@@ -86,13 +91,13 @@ function main() {
         //Center data - Current Project Status
         var mainGameProjectData = document.createElement('div');
 
-        var mainGameLProjectData = document.createElement('div');
+        mainGameLProjectData = document.createElement('div');
         mainGameLProjectData.innerText = 'No project currently ongoing';
 
-        var mainGameRProjectData = document.createElement('div');
+        mainGameRProjectData = document.createElement('div');
         mainGameRProjectData.innerText = 'No project currently ongoing';
 
-        var mainGameCProjectData = document.createElement('div');
+        mainGameCProjectData = document.createElement('div');
         mainGameCProjectData.innerHTML = '<img src="http://via.placeholder.com/440x210">';
         //@TODO - add image here!
 
@@ -218,16 +223,66 @@ function main() {
     }
 
     function createProject() {
+        console.log(currentProject);
         var selectedProject = document.querySelector('.selectedProject').innerText;
+        console.log(selectedProject);
         var projectNameWritten = document.querySelector('input').value;
         if (selectedProject === 'Single Page Website') {
             currentProject = new SinglePageWebsite(projectNameWritten);
         }
-        else if (selectedProject === 'Multiple Page Webstite') {
+        else if (selectedProject === 'Multiple Page Website') {
             currentProject = new MultiplePageWebsite(projectNameWritten);
         }
-        
         backToMainMenu();
+        updateMainScreen();
+    }
+
+    function updateMainScreen() {
+        var projectTypeInfo = document.createElement('p');
+        projectTypeInfo.innerText = 'Project Type: ' + currentProject.type;
+
+        var projectLinesInfo = document.createElement('p');
+        projectLinesInfo.innerText = 'Lines Needed: ' + currentProject.lines;
+
+        var projectNameInfo = document.createElement('p');
+        projectNameInfo.innerText = 'Project Name: ' + currentProject.name;
+
+        mainGameLProjectData.innerText = '';
+
+        mainGameLProjectData.appendChild(projectTypeInfo);
+        mainGameLProjectData.appendChild(projectLinesInfo);
+        mainGameLProjectData.appendChild(projectNameInfo);
+        
+
+        projectLinesTbdInfo = document.createElement('p');
+        projectLinesTbdInfo.innerText = 'Lines to be done: ' + currentProject.linesTbd;
+
+        mainGameRProjectData.innerText = '';
+
+        mainGameRProjectData.appendChild(projectLinesTbdInfo);
+        
+        document.addEventListener('keydown', keystrokeCounter);
+
+    }
+
+    function keystrokeCounter() {
+        keystrokes++;
+        if (keystrokes == playerData.speed || keystrokes > playerData.speed) {
+            currentProject.linesTbd--;
+            keystrokes = 0;
+            mainGameRProjectData.innerText = '';
+            projectLinesTbdInfo.innerText = 'Lines to be done: ' + currentProject.linesTbd;
+            mainGameRProjectData.appendChild(projectLinesTbdInfo);
+        }
+
+        if (currentProject.linesTbd === 0) {
+            buildModal();
+            document.removeEventListener('keydown', keystrokeCounter);
+            var congratsMessage = document.createElement('p');
+            congratsMessage.innerText = 'Wooohoooooo! You completed the project. 200 have been added to your account';
+            modal.appendChild(congratsMessage);
+            playerData.money += currentProject.reward;
+        }
     }
 
     //Show skills screen
@@ -262,11 +317,14 @@ function main() {
         playerData.money -= playerData.upgradeCost;      
         playerData.upgradeCost = playerData.upgradeCost * 2;
         playerData.speed = playerData.speed * 0.8;
-
+        //@TODO - check for the available money before doing upgrade
         var costInfo = document.createElement('p');
         costInfo.innerText = 'Thank you for upgrading';
-
         modal.appendChild(costInfo);
+        setTimeout(() => {
+            backToMainMenu();
+        }, 1000);
+        
     }
 
     //Show past projects screen
@@ -279,9 +337,17 @@ function main() {
     
     function loadGameSettings() {
         buildModal();
+
+        var resetBtn = document.createElement('button');
+        resetBtn.innerText = 'Reset button (It reloads the page)';
+        resetBtn.addEventListener('click', masterReset);
+
+        modal.appendChild(resetBtn);
     }
 
-    
+    function masterReset() {
+        location.reload();
+    }
 
 
     function buildModal() {
