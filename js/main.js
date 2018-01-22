@@ -16,7 +16,10 @@ function main() {
         mainGamePastProjects,
         mainGameSettings,
         modal,
-        modalBtn;
+        modalBtn,
+        selectedProject,
+        projectName,
+        currentProject;
 
     //Get start button and add eventListener to start game
     startBtn.addEventListener('click', destroySplash);
@@ -50,6 +53,8 @@ function main() {
         playerDataWrapper.remove();
         createMainGameScreen(playerName);
     }
+
+    //Creation of main game interface
 
     function createMainGameScreen(playerName) {
         
@@ -137,6 +142,8 @@ function main() {
         
     }
 
+    //Build title screen
+
     function loadTitleData() {
         buildModal();
         var helloP = document.createElement('h2');
@@ -148,6 +155,8 @@ function main() {
         modal.appendChild(info);
         //@TODO add IH image
     }
+
+    //Build stats screen
 
     function loadStatsData() {
         buildModal();
@@ -165,27 +174,121 @@ function main() {
         modal.appendChild(speedText);
     }
 
+    //Build new project flow
+
     function loadNewProjectStarter() {
         buildModal();
+
+        var projectNameText = document.createElement('p');
+        projectNameText.innerText = 'Project Name:'
+
+        projectName = document.createElement('input');
+        projectName.setAttribute('type', 'text');
+        projectName.classList.add('new-project-name');
+
+        modal.appendChild(projectNameText);
+        modal.appendChild(projectName);
+        
+        var projectTypeSelection = document.createElement('div');
+        projectTypeSelection.classList.add('projectTypeSelect')
+
+        for (var index = 0; index < playerData.availableProjects.length; index++) {
+            var newProject = document.createElement('div');
+            newProject.innerText = playerData.availableProjects[index];
+            newProject.classList.add('projectType');
+            newProject.addEventListener('click', selectProject);
+            projectTypeSelection.appendChild(newProject);  
+        }
+        modal.appendChild(projectTypeSelection);
+
+        var createProjectBtn = document.createElement('button');
+        createProjectBtn.innerText = 'Create Project';
+        createProjectBtn.addEventListener('click', createProject);
+
+        modal.appendChild(createProjectBtn);
+
     }
+
+    function selectProject() {
+        var currSelected = document.querySelector('.selectedProject');
+        if (currSelected !== null) {
+            currSelected.classList.remove('selectedProject');
+        }
+        this.classList.add('selectedProject');
+    }
+
+    function createProject() {
+        var selectedProject = document.querySelector('.selectedProject').innerText;
+        var projectNameWritten = document.querySelector('input').value;
+        if (selectedProject === 'Single Page Website') {
+            currentProject = new SinglePageWebsite(projectNameWritten);
+        }
+        else if (selectedProject === 'Multiple Page Webstite') {
+            currentProject = new MultiplePageWebsite(projectNameWritten);
+        }
+        
+        backToMainMenu();
+    }
+
+    //Show skills screen
 
     function loadSkillsData() {
         buildModal();
+
+        var skillsWrap = document.createElement('div');
+
+        var currentSpeed = document.createElement('p');
+        currentSpeed.innerText = 'Your Current Speed is ' + playerData.speed + ' keystrokes per line of code.';
+
+        var upgradeCost = document.createElement('p');
+        upgradeCost.innerText = 'Upgrading costs: ' + playerData.upgradeCost;
+
+        skillsWrap.appendChild(currentSpeed);
+        skillsWrap.appendChild(upgradeCost);
+
+        var upgradeSpeedBtn = document.createElement('button');
+        upgradeSpeedBtn.innerText = 'Upgrade Speed';
+        upgradeSpeedBtn.addEventListener('click', upgradePlayer);
+
+        skillsWrap.appendChild(upgradeSpeedBtn);
+
+        modal.appendChild(skillsWrap);
+
+
+
     }
 
+    function upgradePlayer() {
+        playerData.money -= playerData.upgradeCost;      
+        playerData.upgradeCost = playerData.upgradeCost * 2;
+        playerData.speed = playerData.speed * 0.8;
+
+        var costInfo = document.createElement('p');
+        costInfo.innerText = 'Thank you for upgrading';
+
+        modal.appendChild(costInfo);
+    }
+
+    //Show past projects screen
+    
     function loadPastProjects() {
         buildModal();
     }
+
+    //Show settings screen
     
     function loadGameSettings() {
         buildModal();
     }
 
+    
+
+
     function buildModal() {
         mainGameDiv.remove();
         modal = document.createElement('div');
         modalBtn = document.createElement('button');
-        modalBtn.innerText = 'Done';
+        modalBtn.innerText = 'Back';
         modalBtn.addEventListener('click', backToMainMenu);
         modal.classList.add('modal');
         modal.appendChild(modalBtn);

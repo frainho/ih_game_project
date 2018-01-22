@@ -119,8 +119,43 @@ button {
     height: 375px;
     width: 500px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal button {
+    background-color: #FFA808;
+    margin: 10px auto 10px auto;
+    
+}
+
+.modal button:disabled {
+    background-color: grey;
+}
+
+.modal select {
+    width: 200px;
+    margin: 0 auto;
+}
+
+.new-project-name {
+    width: 200px;
+    margin: 10px auto;
+}
+
+.projectType {
+    border: 1px white solid;
+    height: 100px;
+    width: 100px;
+    line-height: 25px;
+    margin: 0 5px;
+}
+
+.projectTypeSelect {
+    display: flex;
+    justify-content: center;
+}
+
+.selectedProject {
     background-color: #FFA808;
 }
