@@ -23,8 +23,9 @@ function main() {
         mainGameLProjectData,
         mainGameRProjectData,
         mainGameCProjectData,
-        projectLinesTbdInfo;
-    var keystrokes = 0; 
+        projectLinesTbdInfo,
+        projectTypeSelection;
+    var keystrokes = 0;
 
     //Get start button and add eventListener to start game
     startBtn.addEventListener('click', destroySplash);
@@ -35,6 +36,7 @@ function main() {
     }
 
     function loadNewPlayerScreen() {
+        //audioStart();
         startBtn.removeEventListener('click', destroySplash);
         playerDataWrapper = document.createElement('div');
         playerDataWrapper.classList.add('new-player');
@@ -51,18 +53,28 @@ function main() {
     }
 
     function destroyLoadNewPlayer() {
-        //@TODO - prevent game creation with empty name
-        playerDataBtn.removeEventListener('click', destroyLoadNewPlayer);
-        var playerName = playerDataInput.value;
-        playerData = new Player(playerName);
-        playerDataWrapper.remove();
-        createMainGameScreen(playerName);
+        if (playerDataInput.value === '') {
+            var emptyName = document.createElement('p');
+            emptyName.innerText = 'Name cannot be empty';
+            playerDataWrapper.appendChild(emptyName);
+            setTimeout(() => {
+                playerDataWrapper.remove();
+                loadNewPlayerScreen();
+            }, 800);
+        } else {
+            playerDataBtn.removeEventListener('click', destroyLoadNewPlayer);
+            var playerName = playerDataInput.value;
+            playerData = new Player(playerName);
+            playerDataWrapper.remove();
+            createMainGameScreen(playerName);
+        }
+
     }
 
     //Creation of main game interface
 
     function createMainGameScreen(playerName) {
-        
+
         //Create main wrapper for game UI
         mainGameDiv = document.createElement('div');
         mainGameDiv.classList.add('game-wrapper');
@@ -80,12 +92,24 @@ function main() {
 
         //Upper right button - STATS
         var mainGameStats = document.createElement('div');
-        mainGameStats.classList.add('main-game-buttons');
-        mainGameStats.innerText += playerData.money;
-        mainGameStats.innerText += "/" + playerData.speed;
+        mainGameStats.classList.add('skills-info');
+
+        var statsName = document.createElement('p');
+        statsName.innerText = 'Player: ' + playerData.name;
+
+        var statsMoney = document.createElement('p');
+        statsMoney.innerText = 'Money:' + playerData.money;
+
+        var statsSpeed = document.createElement('p');
+        statsSpeed.innerText = 'Speed: ' + playerData.speed + ' (keystrokes/line of code)';
+
+        mainGameStats.appendChild(statsName);
+        mainGameStats.appendChild(statsMoney);
+        mainGameStats.appendChild(statsSpeed);
+
         mainGameStats.addEventListener('click', loadStatsData);
         mainGameTop.appendChild(mainGameStats);
-        
+
         mainGameDiv.appendChild(mainGameTop);
 
         //Center data - Current Project Status
@@ -93,13 +117,15 @@ function main() {
 
         mainGameLProjectData = document.createElement('div');
         mainGameLProjectData.innerText = 'No project currently ongoing';
+        mainGameLProjectData.classList.add('sidebar');
 
         mainGameRProjectData = document.createElement('div');
         mainGameRProjectData.innerText = 'No project currently ongoing';
+        mainGameRProjectData.classList.add('sidebar');
 
         mainGameCProjectData = document.createElement('div');
-        mainGameCProjectData.innerHTML = '<img src="http://via.placeholder.com/440x210">';
-        //@TODO - add image here!
+        mainGameCProjectData.innerHTML = '<img src="./img/img3.jpg">';
+        //mainGameCProjectData.innerHTML = '<iframe src="https://hackertyper.net/" width="440" height="210"></iframe>';
 
         //Build Center area
         mainGameProjectData.appendChild(mainGameLProjectData);
@@ -144,7 +170,7 @@ function main() {
 
         game.appendChild(mainGameDiv);
 
-        
+
     }
 
     //Build title screen
@@ -153,12 +179,15 @@ function main() {
         buildModal();
         var helloP = document.createElement('h2');
         helloP.innerText = 'Hello!';
-        
+
         var info = document.createElement('p');
         info.innerText = ' Thank you so much for playing. This game was created by Filipe Rainho for the IronHack Game Project with help!';
+        var ihLogo = document.createElement('img');
+        ihLogo.setAttribute('src', './img/ironhack.png');
+        ihLogo.classList.add('logo');
         modal.appendChild(helloP);
         modal.appendChild(info);
-        //@TODO add IH image
+        modal.appendChild(ihLogo);
     }
 
     //Build stats screen
@@ -193,16 +222,22 @@ function main() {
 
         modal.appendChild(projectNameText);
         modal.appendChild(projectName);
-        
-        var projectTypeSelection = document.createElement('div');
+
+        projectTypeSelection = document.createElement('div');
         projectTypeSelection.classList.add('projectTypeSelect')
 
         for (var index = 0; index < playerData.availableProjects.length; index++) {
             var newProject = document.createElement('div');
             newProject.innerText = playerData.availableProjects[index];
-            newProject.classList.add('projectType');
+            if (index == 0) {
+                newProject.classList.add('projectType');
+                newProject.classList.add('selectedProject');
+            }
+            else {
+                newProject.classList.add('projectType');
+            }
             newProject.addEventListener('click', selectProject);
-            projectTypeSelection.appendChild(newProject);  
+            projectTypeSelection.appendChild(newProject);
         }
         modal.appendChild(projectTypeSelection);
 
@@ -216,25 +251,32 @@ function main() {
 
     function selectProject() {
         var currSelected = document.querySelector('.selectedProject');
-        if (currSelected !== null) {
-            currSelected.classList.remove('selectedProject');
-        }
+        currSelected.classList.remove('selectedProject');
         this.classList.add('selectedProject');
     }
 
     function createProject() {
-        console.log(currentProject);
         var selectedProject = document.querySelector('.selectedProject').innerText;
-        console.log(selectedProject);
         var projectNameWritten = document.querySelector('input').value;
-        if (selectedProject === 'Single Page Website') {
-            currentProject = new SinglePageWebsite(projectNameWritten);
+        if (projectNameWritten === '') {
+            var projectNameEmpty = document.createElement('p');
+            projectNameEmpty.innerText = 'Project Name cannot be empty';
+            modal.appendChild(projectNameEmpty);
+            setTimeout(() => {
+                modal.remove();
+                loadNewProjectStarter();
+            }, 800);
+
         }
-        else if (selectedProject === 'Multiple Page Website') {
-            currentProject = new MultiplePageWebsite(projectNameWritten);
+        else {
+            if (selectedProject === 'Single Page Website') {
+                currentProject = new SinglePageWebsite(projectNameWritten);
+            } else if (selectedProject === 'Multiple Page Website') {
+                currentProject = new MultiplePageWebsite(projectNameWritten);
+            }
+            backToMainMenu();
+            updateMainScreen();
         }
-        backToMainMenu();
-        updateMainScreen();
     }
 
     function updateMainScreen() {
@@ -248,11 +290,12 @@ function main() {
         projectNameInfo.innerText = 'Project Name: ' + currentProject.name;
 
         mainGameLProjectData.innerText = '';
+       
 
         mainGameLProjectData.appendChild(projectTypeInfo);
         mainGameLProjectData.appendChild(projectLinesInfo);
         mainGameLProjectData.appendChild(projectNameInfo);
-        
+
 
         projectLinesTbdInfo = document.createElement('p');
         projectLinesTbdInfo.innerText = 'Lines to be done: ' + currentProject.linesTbd;
@@ -260,7 +303,7 @@ function main() {
         mainGameRProjectData.innerText = '';
 
         mainGameRProjectData.appendChild(projectLinesTbdInfo);
-        
+
         document.addEventListener('keydown', keystrokeCounter);
 
     }
@@ -310,31 +353,39 @@ function main() {
         modal.appendChild(skillsWrap);
 
 
-
     }
 
     function upgradePlayer() {
-        playerData.money -= playerData.upgradeCost;      
-        playerData.upgradeCost = playerData.upgradeCost * 2;
-        playerData.speed = playerData.speed * 0.8;
-        //@TODO - check for the available money before doing upgrade
-        var costInfo = document.createElement('p');
-        costInfo.innerText = 'Thank you for upgrading';
-        modal.appendChild(costInfo);
-        setTimeout(() => {
-            backToMainMenu();
-        }, 1000);
-        
+
+        if (playerData.upgradeCost > playerData.money) {
+            var noMoneyText = document.createElement('p');
+            noMoneyText.innerText = 'Not enough money for this upgrade. Come back later!';
+            modal.appendChild(noMoneyText);
+            setTimeout(() => {
+                backToMainMenu();
+            }, 1200);
+        }
+        else {
+            playerData.money -= playerData.upgradeCost;
+            playerData.upgradeCost = playerData.upgradeCost * 2;
+            playerData.speed = playerData.speed * 0.8;
+            var costInfo = document.createElement('p');
+            costInfo.innerText = 'Thank you for upgrading';
+            modal.appendChild(costInfo);
+            setTimeout(() => {
+                backToMainMenu();
+            }, 1200);
+        }
     }
 
     //Show past projects screen
-    
+
     function loadPastProjects() {
         buildModal();
     }
 
     //Show settings screen
-    
+
     function loadGameSettings() {
         buildModal();
 
@@ -363,7 +414,28 @@ function main() {
 
     function backToMainMenu() {
         modal.remove();
-        createMainGameScreen();
+        if (currentProject.name == undefined) {
+            createMainGameScreen();
+        }
+        else {
+            createMainGameScreen();
+            updateMainScreen()
+        }
+        
+    }
+
+    function audioStart() {
+        var audioRandomizer = Math.random();
+        var mySound;
+        if (audioRandomizer <= 0.3) {
+            mySound = new Audio('./sounds/01 Frozen Langos.mp3');
+        } else if (audioRandomizer > 0.3 && audioRandomizer <= 0.6 ) {
+            mySound = new Audio('./sounds/02 Boink.mp3');
+        } else {
+            mySound = new Audio('./sounds/11 Secret Treehouse.mp3');
+        }
+        mySound.addEventListener("ended", audioStart);
+        mySound.play();
     }
 
 

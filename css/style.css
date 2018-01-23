@@ -92,7 +92,28 @@ button {
     font-size: 25px;
     text-align: center;
     border: 1px #FFA808 solid;
-    
+}
+.skills-info {
+    width: 320px;
+    height: 90px;
+    background-color: #059E8E;
+    text-align: center;
+    line-height: 30px;
+    border: 1px #FFA808 solid;
+}
+
+.skills-info p {
+    margin: 0px;
+}
+
+.sidebar {
+    width:100px;
+    padding-left: 5px;
+    text-align: center;
+}
+
+.logo {
+    align-self: center;
 }
 
 .topMenu {
