@@ -124,8 +124,9 @@ function main() {
         mainGameRProjectData.classList.add('sidebar');
 
         mainGameCProjectData = document.createElement('div');
-        mainGameCProjectData.innerHTML = '<img src="./img/img3.jpg">';
-        //mainGameCProjectData.innerHTML = '<iframe src="https://hackertyper.net/" width="440" height="210"></iframe>';
+        mainGameCProjectData.classList.add('center');
+
+        getGifs();
 
         //Build Center area
         mainGameProjectData.appendChild(mainGameLProjectData);
@@ -140,8 +141,12 @@ function main() {
         //New project button
         mainGameNewProject = document.createElement('div');
         mainGameNewProject.classList.add('main-game-buttons');
-        mainGameNewProject.innerText = 'Start New Project';
-        mainGameNewProject.addEventListener('click', loadNewProjectStarter);
+        if (currentProject == undefined) {
+            mainGameNewProject.innerText = 'Start New Project';
+            mainGameNewProject.addEventListener('click', loadNewProjectStarter);
+        } else {
+            mainGameNewProject.innerText = 'Project in progress';
+        }
         mainGameBottom.appendChild(mainGameNewProject);
 
         //Skills and Upgrades button
@@ -325,6 +330,8 @@ function main() {
             congratsMessage.innerText = 'Wooohoooooo! You completed the project. 200 have been added to your account';
             modal.appendChild(congratsMessage);
             playerData.money += currentProject.reward;
+            playerData.projectHistory.push(currentProject);
+            currentProject = undefined;
         }
     }
 
@@ -382,6 +389,25 @@ function main() {
 
     function loadPastProjects() {
         buildModal();
+        var projectHistoryList;
+
+        if (playerData.projectHistory.length > 0) {
+            projectHistoryList = document.createElement('div');
+            projectHistoryList.innerText = 'Projects Completed: ';
+
+            for (var i = 0; i < playerData.projectHistory.length; i++) {
+                var project = document.createElement('p');
+                project.innerText = i + 1 + ': This project was a ' + playerData.projectHistory[i].type + 'with the name ' + playerData.projectHistory[i].name;
+                projectHistoryList.appendChild(project);
+            }
+        } 
+        else {
+            projectHistoryList = document.createElement('div');
+            projectHistoryList.innerText = 'You have not completed any projects';
+        }
+        
+
+        modal.appendChild(projectHistoryList);
     }
 
     //Show settings screen
@@ -414,7 +440,7 @@ function main() {
 
     function backToMainMenu() {
         modal.remove();
-        if (currentProject.name == undefined) {
+        if (currentProject == undefined) {
             createMainGameScreen();
         }
         else {
@@ -438,7 +464,26 @@ function main() {
         mySound.play();
     }
 
+    function getGifs() {
+        Math.floor(Math.random() * 100) + 1;
+        var request = new XMLHttpRequest();
+        var data;
+        request.open('GET', 'http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100', true);
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                data = JSON.parse(request.responseText);
+                var url = '<img src="' + data.data[gifNum].images.fixed_height_downsampled.url + '">'
+                mainGameCProjectData.innerHTML = url;
+            }
+        };
+        request.send();
+        setInterval(function() {
+            var url = '<img src="' + data.data[Math.floor(Math.random() * 100) + 1].images.fixed_height_downsampled.url + '">'
+            mainGameCProjectData.innerHTML = url;
+        }, 3000);
 
+    }
+    
 }
 
 

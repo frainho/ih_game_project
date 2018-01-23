@@ -2,8 +2,8 @@ function SinglePageWebsite(name) {
     this.name = name;
     this.type = 'Single Page Webstite';
     this.complexity = 1;
-    this.lines = 20;
-    this.linesTbd = 20;
+    this.lines = 2;
+    this.linesTbd = 2;
     this.timeToComplete = 100;
     this.reward = 200;
     this.skills = {
