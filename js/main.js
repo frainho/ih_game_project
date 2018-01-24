@@ -32,18 +32,25 @@ function main() {
     var aceOn = false;
     var soundOn = true;
 
-    //Get start button and add eventListener to start game
-    startBtn.addEventListener('click', destroySplash);
+    //Adds event listeners to the Start and Sound buttons
 
+    startBtn.addEventListener('click', destroySplash);
     soundBtn.addEventListener('click', soundTrigger);
 
+    //Triggers sound
     audioStart();
 
+    //Erases splash screen and loads new player screen
     function destroySplash() {
         startGameScreen.remove();
         loadNewPlayerScreen();
     }
 
+    /* 
+        Controls the soundOn flag that impacts 
+        the audioStart function
+        to enable or disable the sound
+    */
     function soundTrigger() {
         if (soundOn) {
             soundOn = false;
@@ -55,6 +62,12 @@ function main() {
             audioStart();
         }
     }
+
+    /* 
+        Creates the new player screen and
+        adds a tip so that the player knows that
+        the name field acts as a search for the gifs
+    */
 
     function loadNewPlayerScreen() {
         startBtn.removeEventListener('click', destroySplash);
@@ -80,6 +93,13 @@ function main() {
         game.appendChild(playerDataWrapper);
     }
 
+    /* 
+        Checks if the name input is not empty.
+        If it is then it displays a warning message,
+        if it is not then creates the player and 
+        triggers the main interface
+    */
+
     function destroyLoadNewPlayer() {
         if (playerDataInput.value === '') {
             var emptyName = document.createElement('p');
@@ -99,7 +119,11 @@ function main() {
 
     }
 
-    //Creation of main game interface
+    /* 
+        Creates the whole game interface
+        through DOM manipulation and triggers
+        the gifs in the middle of the screen
+    */
 
     function createMainGameScreen(playerName) {
 
@@ -207,6 +231,10 @@ function main() {
     }
 
     //Build title screen
+    /* 
+        Builds w/DOM the about info when the title is clicked
+        Upper left button
+    */
 
     function loadTitleData() {
         buildModal();
@@ -214,7 +242,7 @@ function main() {
         helloP.innerText = 'Hello!';
 
         var info = document.createElement('p');
-        info.innerText = ' Thank you so much for playing. This game was created by Filipe Rainho for the IronHack Game Project with help!';
+        info.innerText = ' Thank you so much for playing. This game was created by Filipe Rainho for the Ironhack Game Project with help of the awesome teacher and TAs!';
         var ihLogo = document.createElement('img');
         ihLogo.setAttribute('src', './img/ironhack.png');
         ihLogo.classList.add('logo');
@@ -223,7 +251,10 @@ function main() {
         modal.appendChild(ihLogo);
     }
 
-    //Build stats screen
+    /* 
+        Builds w/DOM the stats info when stats is clicked
+        Upper right button
+    */
 
     function loadStatsData() {
         buildModal();
@@ -242,6 +273,11 @@ function main() {
     }
 
     //Build new project flow
+
+    /* 
+        Builds w/DOM the new project flow when the title is clicked
+        Second to bottom right button
+    */
 
     function loadNewProjectStarter() {
         buildModal();
@@ -281,11 +317,20 @@ function main() {
 
     }
 
+    /* 
+        Adds visual cue to the currently selected type of project
+    */
+
     function selectProject() {
         var currSelected = document.querySelector('.selectedProject');
         currSelected.classList.remove('selectedProject');
         this.classList.add('selectedProject');
     }
+
+    /*
+        Forces the player to add a name to the project.
+        When a name exists it creates project
+    */
 
     function createProject() {
         var selectedProject = document.querySelector('.selectedProject').innerText;
@@ -309,6 +354,10 @@ function main() {
             updateMainScreen();
         }
     }
+
+    /* 
+        Adds the current project information to the main screen
+    */
 
     function updateMainScreen() {
         var projectTypeInfo = document.createElement('p');
@@ -337,6 +386,15 @@ function main() {
         document.addEventListener('keydown', loadAce);
     }
 
+    /* 
+        Function triggered by the listener of keydown
+        Increments the keystroke count and as soon as the
+        amount of keystrokes reaches the same of the player current speed
+        it decrements a line in the current project
+        It will also trigger a project completion flow if the project is finished.
+        Adds the project to the player list and clears the current project var
+    */
+
     function keystrokeCounter() {
         keystrokes++;
         if (keystrokes == playerData.speed || keystrokes > playerData.speed) {
@@ -356,8 +414,10 @@ function main() {
                 isWinner();
                 currentProject = undefined;
                 document.removeEventListener('keydown', keystrokeCounter);
+                document.removeEventListener('keydown', loadAce);
             } else {
                 document.removeEventListener('keydown', keystrokeCounter);
+                document.removeEventListener('keydown', loadAce);
                 var congratsMessage = document.createElement('p');
                 congratsMessage.innerText = 'Wooohoooooo! You completed the project. 200 have been added to your account';
                 modal.appendChild(congratsMessage);
@@ -366,7 +426,11 @@ function main() {
         }
     }
 
-    //Show skills screen
+    /* 
+        Loads the upgrade screen showing the current speed
+        and the possibility to upgrade
+        Second to bottom right button
+    */
 
     function loadSkillsData() {
         buildModal();
@@ -392,6 +456,11 @@ function main() {
 
     }
 
+    /* 
+        Checks if there is enough money to upgrade and 
+        increments the player speed by 20%
+    */
+
     function upgradePlayer() {
 
         if (playerData.upgradeCost > playerData.money) {
@@ -414,7 +483,10 @@ function main() {
         }
     }
 
-    //Show past projects screen
+    /* 
+        Displays a list of projects done by the player
+        Bottom left button
+    */
 
     function loadPastProjects() {
         buildModal();
@@ -437,7 +509,10 @@ function main() {
         modal.appendChild(projectHistoryList);
     }
 
-    //Show settings screen
+    /* 
+        Loads the game settings
+        Bottom right button
+    */
 
     function loadGameSettings() {
         buildModal();
@@ -458,9 +533,17 @@ function main() {
         modal.appendChild(settingsSoundBtn);
     }
 
+    /* 
+        Ingame button to reload the page
+    */
+
     function masterReset() {
         location.reload();
     }
+
+    /* 
+        Builds a base modal to be used by all the buttons of the interface
+    */
 
     function buildModal() {
         mainGameDiv.remove();
@@ -473,16 +556,25 @@ function main() {
         game.appendChild(modal);
     }
 
+    /* 
+        Rebuilds the main interface
+    */
+
     function backToMainMenu() {
         modal.remove();
         if (currentProject == undefined) {
             createMainGameScreen();
         } else {
             createMainGameScreen();
-            updateMainScreen()
+            updateMainScreen();
         }
-
     }
+
+    /* 
+        Triggers when the player reaches the end of the game
+        i.e. Reaches 700 in money
+        Shows a congratulations video
+    */
 
     function isWinner() {
         buildModal();
@@ -491,6 +583,11 @@ function main() {
         winnerDiv.innerHTML = '<iframe width="400" height="225" src="https://www.youtube.com/embed/1Bix44C1EzY?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><p>WIIIIIIINNNNNNNNNNNNNNNNNEEEEEEERRRRR!</p>';
         modal.appendChild(winnerDiv);
     }
+
+    /* 
+        Randomizes and plays/pauses the audio 
+        when sound buttons are pressed
+    */
 
     function audioStart() {
         if (soundOn) {
@@ -510,8 +607,15 @@ function main() {
 
     }
 
+    /* 
+        Triggers Ajax request to GIHPY API
+        API_KEY: 6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX
+
+        Gets a JSON with 100 gifs and randomizes them each 4 seconds
+    
+    */
+
     function getGifs() {
-        Math.floor(Math.random() * 100) + 1;
         var request = new XMLHttpRequest();
         var data;
         request.open('GET', 'http://api.giphy.com/v1/gifs/search?q=' + playerData.name + '&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100', true);
@@ -526,6 +630,11 @@ function main() {
         };
         request.send();
     }
+
+    /* 
+        When the º key is pressed 
+        it triggers a full screen editor. Pressing again returns to the game
+    */
 
     function loadAce(event) {
         if (aceOn == false) {
@@ -549,6 +658,5 @@ function main() {
     }
 
 }
-
 
 window.onload = main;

@@ -13,25 +13,35 @@ html {
 
 /* ---- typography ---- */
 
+@font-face {
+    font-family: zig;
+    src: url(../fonts/zig.ttf);
+}
+
 body {
     font-family: zig, Arial, Helvetica, sans-serif;
     font-size: 10px;
 }
 
 h1 {
-    display: table;
     font-size: 50px;
     text-align: center;
-    margin: 0 auto;
     font-family: zig,
     Arial,
     Helvetica,
     sans-serif;
 }
 
-@font-face {
-    font-family: zig;
-    src: url(../fonts/zig.ttf);
+button {
+    color: white;
+    font-family: zig, Arial, Helvetica, sans-serif;
+}
+
+.main-game-buttons {
+    line-height: 30px;
+    font-size: 18px;
+    text-align: center;
+    font-family: zig, Arial, Helvetica, sans-serif;
 }
 
 /* ---- layout ---- */
@@ -40,6 +50,11 @@ body {
     margin-top: 100px;
     background-color: #588B8B;
     color: #f9f9f9;
+}
+
+h1 {
+    display: table;
+    margin: 0 auto;
 }
 
 #game {
@@ -63,14 +78,11 @@ button {
     border: none;
     padding: 15px 20px;
     background-color: #F28F3B;
-    color: white;
-    font-family: zig, Arial, Helvetica, sans-serif;
 }
 
 .btns {
     display: flex;
-    justify-content: center;
-    
+    justify-content: center;    
 }
 
 .btns button {
@@ -88,12 +100,6 @@ button {
     margin: 0 auto 10px auto;
 }
 
-/* .new-player button {
-    margin-bottom: 10px;
-    display: block;
-    margin: 0 auto;
-} */
-
 .game-wrapper {
     display: flex;
     flex-direction: column;
@@ -103,11 +109,8 @@ button {
     width: 320px;
     height: 90px;
     background-color: #F28F3B;
-    line-height: 30px;
-    font-size: 18px;
-    text-align: center;
     border: 1px #C8553D solid;
-    font-family: zig, Arial, Helvetica, sans-serif;
+
 }
 
 .bottomMenu .main-game-buttons {
