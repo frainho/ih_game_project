@@ -578,7 +578,8 @@ function main() {
 
     function isWinner() {
         buildModal();
-
+        soundOn = false;
+        audioStart();
         var winnerDiv = document.createElement('div');
         winnerDiv.innerHTML = '<iframe width="400" height="225" src="https://www.youtube.com/embed/1Bix44C1EzY?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><p>WIIIIIIINNNNNNNNNNNNNNNNNEEEEEEERRRRR!</p>';
         modal.appendChild(winnerDiv);
@@ -618,7 +619,7 @@ function main() {
     function getGifs() {
         var request = new XMLHttpRequest();
         var data;
-        request.open('GET', 'http://api.giphy.com/v1/gifs/search?q=' + playerData.name + '&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100', true);
+        request.open('GET', 'https://api.giphy.com/v1/gifs/search?q=' + playerData.name + '&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100', true);
         request.onload = function () {
             if (request.status >= 200 && request.status < 400) {
                 data = JSON.parse(request.responseText);
@@ -639,6 +640,8 @@ function main() {
     function loadAce(event) {
         if (aceOn == false) {
             if (event.key == 'º') {
+                soundOn = false;
+                audioStart();
                 aceOn = true;
                 editText = document.createElement('div');
                 editText.innerText = 'function foo(items) {        var x = "All this is syntax highlighted";        return x;    }';
@@ -650,6 +653,8 @@ function main() {
                 document.removeEventListener('keydown', keystrokeCounter);
             }
         } else if (event.key == 'º') {
+            soundOn = true;
+            audioStart();
             aceOn = false;
             editText.remove();
             document.addEventListener('keydown', keystrokeCounter);
