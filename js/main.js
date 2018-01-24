@@ -230,7 +230,6 @@ function main() {
 
     }
 
-    //Build title screen
     /* 
         Builds w/DOM the about info when the title is clicked
         Upper left button
@@ -644,7 +643,7 @@ function main() {
                 audioStart();
                 aceOn = true;
                 editText = document.createElement('div');
-                editText.innerText = 'function foo(items) {        var x = "All this is syntax highlighted";        return x;    }';
+                editText.innerText = 'function workingHard(items) { <p>Not Canvas</p>  }';
                 editText.setAttribute('id', 'something');
                 document.body.appendChild(editText);
                 var editor = ace.edit("something");
