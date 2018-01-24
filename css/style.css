@@ -38,13 +38,11 @@ h1 {
     src: url(../fonts/zig.ttf);
 }
 
-
-
 /* ---- layout ---- */
 
 body {
     margin-top: 100px;
-    background-color: grey;
+    background-color: #588B8B;
     color: #f9f9f9;
 }
 
@@ -55,7 +53,7 @@ body {
     margin: auto;
     width: 640px;
     height: 480px;
-    background-color: #FFA808;
+    background-color: #C8553D;
 }
 
 .main-title {
@@ -68,7 +66,7 @@ body {
 button {
     border: none;
     padding: 15px 20px;
-    background-color: #059E8E;
+    background-color: #F28F3B;
     color: white;
     font-family: arcade-classic, Arial, Helvetica, sans-serif;
 }
@@ -98,21 +96,21 @@ button {
 .main-game-buttons {
     width: 320px;
     height: 90px;
-    background-color: #059E8E;
+    background-color: #F28F3B;
     line-height: 90px;
     font-size: 25px;
     text-align: center;
-    border: 1px #FFA808 solid;
+    border: 1px #C8553D solid;
     font-family: arcade-classic, Arial, Helvetica, sans-serif;
 }
 .skills-info {
     width: 320px;
     height: 90px;
     font-size: 18px;
-    background-color: #059E8E;
+    background-color: #F28F3B;
     text-align: center;
     line-height: 30px;
-    border: 1px #FFA808 solid;
+    border: 1px #C8553D solid;
     font-family: arcade-classic, Arial, Helvetica, sans-serif;
 }
 
@@ -168,7 +166,7 @@ button {
 
 .modal {
     margin: 0 auto;
-    background-color: #059E8E;
+    background-color: #F28F3B;
     height: 375px;
     width: 500px;
     text-align: center;
@@ -177,7 +175,7 @@ button {
 }
 
 .modal button {
-    background-color: #FFA808;
+    background-color: #C8553D;
     margin: 10px auto 10px auto;
     
 }
@@ -210,5 +208,5 @@ button {
 }
 
 .selectedProject {
-    background-color: #FFA808;
+    background-color: #C8553D;
 }

@@ -75,6 +75,7 @@ function main() {
 
     function createMainGameScreen(playerName) {
 
+        getGifs();
         //Create main wrapper for game UI
         mainGameDiv = document.createElement('div');
         mainGameDiv.classList.add('game-wrapper');
@@ -126,7 +127,6 @@ function main() {
         mainGameCProjectData = document.createElement('div');
         mainGameCProjectData.classList.add('center');
 
-        getGifs();
 
         //Build Center area
         mainGameProjectData.appendChild(mainGameLProjectData);
@@ -203,7 +203,7 @@ function main() {
         statsTitle.innerText = 'Stats';
 
         var moneyText = document.createElement('p');
-        moneyText.innerText = 'You made ' + playerData.money + ' so far. Reach 10000 to win!';
+        moneyText.innerText = 'You made ' + playerData.money + ' so far. Reach 5000 to win!';
 
         var speedText = document.createElement('p');
         speedText.innerText = 'You need ' + playerData.speed + ' keystrokes in order to do a line of code. Check for upgrades to see if you can get faster!';
@@ -325,13 +325,20 @@ function main() {
 
         if (currentProject.linesTbd === 0) {
             buildModal();
-            document.removeEventListener('keydown', keystrokeCounter);
-            var congratsMessage = document.createElement('p');
-            congratsMessage.innerText = 'Wooohoooooo! You completed the project. 200 have been added to your account';
-            modal.appendChild(congratsMessage);
             playerData.money += currentProject.reward;
             playerData.projectHistory.push(currentProject);
-            currentProject = undefined;
+            if (playerData.money >= 700) {
+                backToMainMenu();
+                isWinner();
+                currentProject = undefined;
+                document.removeEventListener('keydown', keystrokeCounter);
+            } else {
+                document.removeEventListener('keydown', keystrokeCounter);
+                var congratsMessage = document.createElement('p');
+                congratsMessage.innerText = 'Wooohoooooo! You completed the project. 200 have been added to your account';
+                modal.appendChild(congratsMessage);
+                currentProject = undefined;
+            }  
         }
     }
 
@@ -450,6 +457,14 @@ function main() {
         
     }
 
+    function isWinner() {
+        buildModal();
+
+        var winnerDiv = document.createElement('div');
+        winnerDiv.innerHTML = '<iframe width="400" height="225" src="https://www.youtube.com/embed/1Bix44C1EzY?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><p>WIIIIIIINNNNNNNNNNNNNNNNNEEEEEEERRRRR!</p>';
+        modal.appendChild(winnerDiv);
+    }
+
     function audioStart() {
         var audioRandomizer = Math.random();
         var mySound;
@@ -468,19 +483,18 @@ function main() {
         Math.floor(Math.random() * 100) + 1;
         var request = new XMLHttpRequest();
         var data;
-        request.open('GET', 'http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100', true);
+        request.open('GET', 'http://api.giphy.com/v1/gifs/search?q=' + playerData.name + '&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100', true);
         request.onload = function () {
             if (request.status >= 200 && request.status < 400) {
                 data = JSON.parse(request.responseText);
-                var url = '<img src="' + data.data[gifNum].images.fixed_height_downsampled.url + '">'
-                mainGameCProjectData.innerHTML = url;
             }
+            setInterval(function () {
+                var url = '<img src="' + data.data[Math.floor(Math.random() * 100)].images.fixed_height_downsampled.url + '">'
+                mainGameCProjectData.innerHTML = url;
+            }, 4000);
         };
         request.send();
-        setInterval(function() {
-            var url = '<img src="' + data.data[Math.floor(Math.random() * 100) + 1].images.fixed_height_downsampled.url + '">'
-            mainGameCProjectData.innerHTML = url;
-        }, 3000);
+        
 
     }
     
