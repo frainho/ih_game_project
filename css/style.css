@@ -26,10 +26,7 @@ body {
 h1 {
     font-size: 50px;
     text-align: center;
-    font-family: zig,
-    Arial,
-    Helvetica,
-    sans-serif;
+    font-family: zig, Arial, Helvetica, sans-serif;
 }
 
 button {
@@ -43,6 +40,26 @@ button {
     text-align: center;
     font-family: zig, Arial, Helvetica, sans-serif;
 }
+
+.skills-info {
+    font-size: 10px;
+    text-align: center;
+    line-height: 30px;
+    font-family: zig, Arial, Helvetica, sans-serif;
+}
+
+.sidebar {
+    text-align: center;
+}
+
+.modal {
+    text-align: center;
+}
+
+.projectType {
+    line-height: 25px;
+}
+
 
 /* ---- layout ---- */
 
@@ -82,7 +99,7 @@ button {
 
 .btns {
     display: flex;
-    justify-content: center;    
+    justify-content: center;
 }
 
 .btns button {
@@ -110,21 +127,17 @@ button {
     height: 90px;
     background-color: #F28F3B;
     border: 1px #C8553D solid;
-
 }
 
 .bottomMenu .main-game-buttons {
     line-height: 90px;
 }
+
 .skills-info {
     width: 320px;
     height: 90px;
-    font-size: 10px;
     background-color: #F28F3B;
-    text-align: center;
-    line-height: 30px;
     border: 1px #C8553D solid;
-    font-family: zig, Arial, Helvetica, sans-serif;
 }
 
 .skills-info p {
@@ -132,10 +145,8 @@ button {
 }
 
 .sidebar {
-    width:100px;
+    width: 100px;
     padding-left: 5px;
-    text-align: center;
-    
 }
 
 .center {
@@ -152,7 +163,7 @@ button {
 
 .center a img {
     max-height: 100%;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 .logo {
@@ -160,21 +171,17 @@ button {
 }
 
 .topMenu {
-    display:flex;
+    display: flex;
 }
 
-.centerMenu{
-    display:flex;
+.centerMenu {
+    display: flex;
     height: 210px;
 }
 
 .bottomMenu {
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
-}
-
-.background-filter {
-    filter: blur(2px);
 }
 
 .modal {
@@ -182,7 +189,6 @@ button {
     background-color: #F28F3B;
     height: 375px;
     width: 500px;
-    text-align: center;
     display: flex;
     flex-direction: column;
 }
@@ -190,7 +196,6 @@ button {
 .modal button {
     background-color: #C8553D;
     margin: 10px auto 10px auto;
-    
 }
 
 .modal button:disabled {
@@ -211,7 +216,6 @@ button {
     border: 1px white solid;
     height: 100px;
     width: 100px;
-    line-height: 25px;
     margin: 0 5px;
 }
 

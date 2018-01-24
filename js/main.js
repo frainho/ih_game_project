@@ -262,7 +262,7 @@ function main() {
         statsTitle.innerText = 'Stats';
 
         var moneyText = document.createElement('p');
-        moneyText.innerText = 'You made ' + playerData.money + ' so far. Reach 5000 to win!';
+        moneyText.innerText = 'You made ' + playerData.money + ' so far. Reach 700 to win!';
 
         var speedText = document.createElement('p');
         speedText.innerText = 'You need ' + playerData.speed + ' keystrokes in order to do a line of code. Check for upgrades to see if you can get faster!';
@@ -469,7 +469,7 @@ function main() {
             modal.appendChild(noMoneyText);
             setTimeout(() => {
                 backToMainMenu();
-            }, 1200);
+            }, 800);
         } else {
             playerData.money -= playerData.upgradeCost;
             playerData.upgradeCost = playerData.upgradeCost * 2;
@@ -479,7 +479,7 @@ function main() {
             modal.appendChild(costInfo);
             setTimeout(() => {
                 backToMainMenu();
-            }, 1200);
+            }, 800);
         }
     }
 
