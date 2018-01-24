@@ -20,17 +20,13 @@ body {
 
 h1 {
     display: table;
-    font-size: 100px;
+    font-size: 50px;
+    text-align: center;
     margin: 0 auto;
-    font-family: arcade-classic,
+    font-family: zig,
     Arial,
     Helvetica,
     sans-serif;
-}
-
-@font-face {
-    font-family: arcade-classic;
-    src: url(../fonts/ARCADECLASSIC.TTF);
 }
 
 @font-face {
@@ -68,12 +64,17 @@ button {
     padding: 15px 20px;
     background-color: #F28F3B;
     color: white;
-    font-family: arcade-classic, Arial, Helvetica, sans-serif;
+    font-family: zig, Arial, Helvetica, sans-serif;
 }
 
-.start-btn {
-    display: table;
-    margin: 0 auto;
+.btns {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.btns button {
+    margin: 0 10px;
 }
 
 .new-player {
@@ -83,35 +84,44 @@ button {
 }
 
 .new-player input {
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+/* .new-player button {
     margin-bottom: 10px;
     display: block;
-}
+    margin: 0 auto;
+} */
 
 .game-wrapper {
     display: flex;
     flex-direction: column;
-    /*  */
 }
 
 .main-game-buttons {
     width: 320px;
     height: 90px;
     background-color: #F28F3B;
-    line-height: 90px;
-    font-size: 25px;
+    line-height: 30px;
+    font-size: 18px;
     text-align: center;
     border: 1px #C8553D solid;
-    font-family: arcade-classic, Arial, Helvetica, sans-serif;
+    font-family: zig, Arial, Helvetica, sans-serif;
+}
+
+.bottomMenu .main-game-buttons {
+    line-height: 90px;
 }
 .skills-info {
     width: 320px;
     height: 90px;
-    font-size: 18px;
+    font-size: 10px;
     background-color: #F28F3B;
     text-align: center;
     line-height: 30px;
     border: 1px #C8553D solid;
-    font-family: arcade-classic, Arial, Helvetica, sans-serif;
+    font-family: zig, Arial, Helvetica, sans-serif;
 }
 
 .skills-info p {
@@ -209,4 +219,12 @@ button {
 
 .selectedProject {
     background-color: #C8553D;
+}
+
+#something {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }

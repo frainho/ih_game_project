@@ -3,6 +3,7 @@
 function main() {
     var gameScreen = document.querySelector('#game');
     var startBtn = document.querySelector('.start-btn');
+    var soundBtn = document.querySelector('.sound-btn');
     var startGameScreen = document.querySelector('.start-game-screen');
     var playerDataInput,
         playerData,
@@ -24,31 +25,58 @@ function main() {
         mainGameRProjectData,
         mainGameCProjectData,
         projectLinesTbdInfo,
-        projectTypeSelection;
+        projectTypeSelection,
+        editText,
+        mySound;
     var keystrokes = 0;
+    var aceOn = false;
+    var soundOn = true;
 
     //Get start button and add eventListener to start game
     startBtn.addEventListener('click', destroySplash);
+
+    soundBtn.addEventListener('click', soundTrigger);
+
+    audioStart();
 
     function destroySplash() {
         startGameScreen.remove();
         loadNewPlayerScreen();
     }
 
+    function soundTrigger() {
+        if (soundOn) {
+            soundOn = false;
+            this.innerText = 'Sound Off'
+            audioStart();
+        } else {
+            soundOn = true;
+            this.innerText = 'Sound On'
+            audioStart();
+        }
+    }
+
     function loadNewPlayerScreen() {
-        //audioStart();
         startBtn.removeEventListener('click', destroySplash);
+
         playerDataWrapper = document.createElement('div');
         playerDataWrapper.classList.add('new-player');
         playerDataWrapper.innerHTML = '<p>What is your name?</p>';
+
         playerDataInput = document.createElement('input');
+        playerDataInput.setAttribute('type', 'text');
+        playerDataWrapper.appendChild(playerDataInput);
+
         playerDataBtn = document.createElement('button');
         playerDataBtn.innerText = 'Start';
         playerDataBtn.classList.add('start-input-btn');
-        playerDataInput.setAttribute('type', 'text');
         playerDataBtn.addEventListener('click', destroyLoadNewPlayer);
-        playerDataWrapper.appendChild(playerDataInput);
         playerDataWrapper.appendChild(playerDataBtn);
+
+        var playerTip = document.createElement('p');
+        playerTip.innerText = 'Psst... use the input to search the types of gifs you prefer!';
+        playerDataWrapper.appendChild(playerTip);
+
         game.appendChild(playerDataWrapper);
     }
 
@@ -87,7 +115,7 @@ function main() {
         //Upper left button - TITLE
         mainGameTitle = document.createElement('div');
         mainGameTitle.classList.add('main-game-buttons');
-        mainGameTitle.innerText = 'Web Dev Story';
+        mainGameTitle.innerText = 'Procrastinator 3000 Ultimate Turbo Unlimited';
         mainGameTitle.addEventListener('click', loadTitleData);
         mainGameTop.appendChild(mainGameTitle);
 
@@ -99,7 +127,7 @@ function main() {
         statsName.innerText = 'Player: ' + playerData.name;
 
         var statsMoney = document.createElement('p');
-        statsMoney.innerText = 'Money:' + playerData.money;
+        statsMoney.innerText = 'Money: ' + playerData.money;
 
         var statsSpeed = document.createElement('p');
         statsSpeed.innerText = 'Speed: ' + playerData.speed + ' (keystrokes/line of code)';
@@ -237,8 +265,7 @@ function main() {
             if (index == 0) {
                 newProject.classList.add('projectType');
                 newProject.classList.add('selectedProject');
-            }
-            else {
+            } else {
                 newProject.classList.add('projectType');
             }
             newProject.addEventListener('click', selectProject);
@@ -272,8 +299,7 @@ function main() {
                 loadNewProjectStarter();
             }, 800);
 
-        }
-        else {
+        } else {
             if (selectedProject === 'Single Page Website') {
                 currentProject = new SinglePageWebsite(projectNameWritten);
             } else if (selectedProject === 'Multiple Page Website') {
@@ -295,12 +321,10 @@ function main() {
         projectNameInfo.innerText = 'Project Name: ' + currentProject.name;
 
         mainGameLProjectData.innerText = '';
-       
 
         mainGameLProjectData.appendChild(projectTypeInfo);
         mainGameLProjectData.appendChild(projectLinesInfo);
         mainGameLProjectData.appendChild(projectNameInfo);
-
 
         projectLinesTbdInfo = document.createElement('p');
         projectLinesTbdInfo.innerText = 'Lines to be done: ' + currentProject.linesTbd;
@@ -310,7 +334,7 @@ function main() {
         mainGameRProjectData.appendChild(projectLinesTbdInfo);
 
         document.addEventListener('keydown', keystrokeCounter);
-
+        document.addEventListener('keydown', loadAce);
     }
 
     function keystrokeCounter() {
@@ -338,7 +362,7 @@ function main() {
                 congratsMessage.innerText = 'Wooohoooooo! You completed the project. 200 have been added to your account';
                 modal.appendChild(congratsMessage);
                 currentProject = undefined;
-            }  
+            }
         }
     }
 
@@ -366,7 +390,6 @@ function main() {
 
         modal.appendChild(skillsWrap);
 
-
     }
 
     function upgradePlayer() {
@@ -378,8 +401,7 @@ function main() {
             setTimeout(() => {
                 backToMainMenu();
             }, 1200);
-        }
-        else {
+        } else {
             playerData.money -= playerData.upgradeCost;
             playerData.upgradeCost = playerData.upgradeCost * 2;
             playerData.speed = playerData.speed * 0.8;
@@ -407,12 +429,10 @@ function main() {
                 project.innerText = i + 1 + ': This project was a ' + playerData.projectHistory[i].type + 'with the name ' + playerData.projectHistory[i].name;
                 projectHistoryList.appendChild(project);
             }
-        } 
-        else {
+        } else {
             projectHistoryList = document.createElement('div');
             projectHistoryList.innerText = 'You have not completed any projects';
         }
-        
 
         modal.appendChild(projectHistoryList);
     }
@@ -426,13 +446,21 @@ function main() {
         resetBtn.innerText = 'Reset button (It reloads the page)';
         resetBtn.addEventListener('click', masterReset);
 
+        var settingsSoundBtn = document.createElement('button');
+        if (soundOn) {
+            settingsSoundBtn.innerText = 'Sound On'
+        } else {
+            settingsSoundBtn.innerText = 'Sound Off'
+        }
+        settingsSoundBtn.addEventListener('click', soundTrigger);
+
         modal.appendChild(resetBtn);
+        modal.appendChild(settingsSoundBtn);
     }
 
     function masterReset() {
         location.reload();
     }
-
 
     function buildModal() {
         mainGameDiv.remove();
@@ -449,12 +477,11 @@ function main() {
         modal.remove();
         if (currentProject == undefined) {
             createMainGameScreen();
-        }
-        else {
+        } else {
             createMainGameScreen();
             updateMainScreen()
         }
-        
+
     }
 
     function isWinner() {
@@ -466,17 +493,21 @@ function main() {
     }
 
     function audioStart() {
-        var audioRandomizer = Math.random();
-        var mySound;
-        if (audioRandomizer <= 0.3) {
-            mySound = new Audio('./sounds/01 Frozen Langos.mp3');
-        } else if (audioRandomizer > 0.3 && audioRandomizer <= 0.6 ) {
-            mySound = new Audio('./sounds/02 Boink.mp3');
+        if (soundOn) {
+            var audioRandomizer = Math.random();
+            if (audioRandomizer <= 0.3) {
+                mySound = new Audio('./sounds/01 Frozen Langos.mp3');
+            } else if (audioRandomizer > 0.3 && audioRandomizer <= 0.6) {
+                mySound = new Audio('./sounds/02 Boink.mp3');
+            } else {
+                mySound = new Audio('./sounds/11 Secret Treehouse.mp3');
+            }
+            mySound.addEventListener("ended", audioStart);
+            mySound.play();
         } else {
-            mySound = new Audio('./sounds/11 Secret Treehouse.mp3');
+            mySound.pause();
         }
-        mySound.addEventListener("ended", audioStart);
-        mySound.play();
+
     }
 
     function getGifs() {
@@ -494,10 +525,29 @@ function main() {
             }, 4000);
         };
         request.send();
-        
+    }
+
+    function loadAce(event) {
+        if (aceOn == false) {
+            if (event.key == 'º') {
+                aceOn = true;
+                editText = document.createElement('div');
+                editText.innerText = 'function foo(items) {        var x = "All this is syntax highlighted";        return x;    }';
+                editText.setAttribute('id', 'something');
+                document.body.appendChild(editText);
+                var editor = ace.edit("something");
+                editor.setTheme("ace/theme/monokai");
+                editor.session.setMode("ace/mode/javascript");
+                document.removeEventListener('keydown', keystrokeCounter);
+            }
+        } else if (event.key == 'º') {
+            aceOn = false;
+            editText.remove();
+            document.addEventListener('keydown', keystrokeCounter);
+        }
 
     }
-    
+
 }
 
 
