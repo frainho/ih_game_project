@@ -26,7 +26,10 @@ body {
 h1 {
     font-size: 50px;
     text-align: center;
-    font-family: zig, Arial, Helvetica, sans-serif;
+    font-family: zig,
+    Arial,
+    Helvetica,
+    sans-serif;
 }
 
 button {
@@ -99,7 +102,7 @@ button {
 
 .btns {
     display: flex;
-    justify-content: center;
+    justify-content: center;    
 }
 
 .btns button {
@@ -132,7 +135,6 @@ button {
 .bottomMenu .main-game-buttons {
     line-height: 90px;
 }
-
 .skills-info {
     width: 320px;
     height: 90px;
@@ -145,8 +147,8 @@ button {
 }
 
 .sidebar {
-    width: 100px;
-    padding-left: 5px;
+    width:100px;
+    padding-left: 5px;   
 }
 
 .center {
@@ -163,7 +165,7 @@ button {
 
 .center a img {
     max-height: 100%;
-    margin: 0 auto;
+    margin:0 auto;
 }
 
 .logo {
@@ -171,16 +173,16 @@ button {
 }
 
 .topMenu {
-    display: flex;
+    display:flex;
 }
 
-.centerMenu {
-    display: flex;
+.centerMenu{
+    display:flex;
     height: 210px;
 }
 
 .bottomMenu {
-    display: flex;
+    display:flex;
     flex-wrap: wrap;
 }
 
@@ -215,7 +217,7 @@ button {
 .projectType {
     border: 1px white solid;
     height: 100px;
-    width: 100px;
+    width: 100px; 
     margin: 0 5px;
 }
 
