@@ -1,6 +1,9 @@
 "use strict";
 
+var mainGameCProjectData;
+
 function main() {
+  var game = document.getElementById("game");
   var startBtn = document.querySelector(".start-btn");
   var soundBtn = document.querySelector(".sound-btn");
   var startGameScreen = document.querySelector(".start-game-screen");
@@ -22,15 +25,17 @@ function main() {
     currentProject,
     mainGameLProjectData,
     mainGameRProjectData,
-    mainGameCProjectData,
     projectLinesTbdInfo,
     projectTypeSelection,
     editText,
-    mySound;
+    mySound,
+    canvas,
+    intervalID;
   var keystrokes = 0;
   var aceOn = false;
   var soundOn = true;
   var contrastOn = false;
+  var cArkOn = false;
 
   //Adds event listeners to the Start and Sound buttons
 
@@ -138,7 +143,6 @@ function main() {
   */
 
   function createMainGameScreen() {
-    getGifs();
     //Create main wrapper for game UI
     mainGameDiv = document.createElement("div");
     mainGameDiv.classList.add("game-wrapper");
@@ -361,6 +365,7 @@ function main() {
       } else if (selectedProject === "Multiple Page Website") {
         currentProject = new MultiplePageWebsite(projectNameWritten);
       }
+      getGifs();
       backToMainMenu();
       updateMainScreen();
     }
@@ -396,6 +401,7 @@ function main() {
 
     document.addEventListener("keydown", keystrokeCounter);
     document.addEventListener("keydown", loadAce);
+    document.addEventListener("keydown", cArk);
   }
 
   /* 
@@ -652,14 +658,15 @@ function main() {
       if (request.status >= 200 && request.status < 400) {
         data = JSON.parse(request.responseText);
       }
-      setInterval(function() {
+      intervalID = setInterval(function() {
         var url =
           "<img src='" +
-          data.data[Math.floor(Math.random() * 100)].images
+          data.data[Math.floor(Math.random() * data.data.length)].images
             .fixed_height_downsampled.url +
           "'>";
         mainGameCProjectData.innerHTML = url;
       }, 4000);
+      console.log(intervalID);
     };
     request.send();
   }
@@ -691,6 +698,22 @@ function main() {
       aceOn = false;
       editText.remove();
       document.addEventListener("keydown", keystrokeCounter);
+    }
+  }
+
+  /* 
+  
+  
+  */
+
+  function cArk(event) {
+    if (cArkOn === false) {
+      if (event.key == "0") {
+        cArkOn = true;
+        clearInterval(1);
+        loadCanvas();
+        draw();
+      }
     }
   }
 }
