@@ -1,0 +1,236 @@
+/* ---- reset ---- */
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* ---- typography ---- */
+
+@font-face {
+  font-family: zig;
+  src: url(../fonts/zig.ttf);
+}
+
+body {
+  font-family: zig, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+}
+
+h1 {
+  font-size: 50px;
+  text-align: center;
+  font-family: zig, Arial, Helvetica, sans-serif;
+}
+
+button {
+  color: darkblue;
+  font-family: zig, Arial, Helvetica, sans-serif;
+}
+
+.main-game-buttons {
+  line-height: 30px;
+  font-size: 18px;
+  text-align: center;
+  font-family: zig, Arial, Helvetica, sans-serif;
+}
+
+.skills-info {
+  font-size: 10px;
+  text-align: center;
+  line-height: 30px;
+  font-family: zig, Arial, Helvetica, sans-serif;
+}
+
+.sidebar {
+  text-align: center;
+}
+
+.modal {
+  text-align: center;
+}
+
+.projectType {
+  line-height: 25px;
+}
+
+/* ---- layout ---- */
+
+body {
+  margin-top: 100px;
+  background-color: #588b8b;
+  color: #f9f9f9;
+}
+
+h1 {
+  display: table;
+  margin: 0 auto;
+}
+
+#game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  width: 640px;
+  height: 480px;
+  background-color: black;
+}
+
+.main-title {
+  margin-bottom: 25px;
+}
+
+/* ---- components ---- */
+
+button {
+  border: none;
+  padding: 15px 20px;
+  background-color: white;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+}
+
+.btns button {
+  margin: 0 10px;
+}
+
+.new-player {
+  text-align: center;
+  display: table;
+  margin: 0 auto;
+}
+
+.new-player input {
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-game-buttons {
+  width: 320px;
+  height: 90px;
+  background-color: darkblue;
+  border: 1px white solid;
+}
+
+.bottomMenu .main-game-buttons {
+  line-height: 90px;
+}
+.skills-info {
+  width: 320px;
+  height: 90px;
+  background-color: darkblue;
+  border: 1px white solid;
+}
+
+.skills-info p {
+  margin: 0px;
+}
+
+.sidebar {
+  width: 100px;
+  padding-left: 5px;
+}
+
+.center {
+  max-width: 440px;
+  overflow: hidden;
+  margin: auto;
+}
+
+.center a {
+  max-height: 100%;
+  margin: auto;
+  display: flex;
+}
+
+.center a img {
+  max-height: 100%;
+  margin: 0 auto;
+}
+
+.logo {
+  align-self: center;
+}
+
+.topMenu {
+  display: flex;
+}
+
+.centerMenu {
+  display: flex;
+  height: 210px;
+}
+
+.bottomMenu {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.modal {
+  margin: 0 auto;
+  background-color: white;
+  color: black;
+  height: 375px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal button {
+  background-color: black;
+  margin: 10px auto 10px auto;
+  color: white;
+}
+
+.modal button:disabled {
+  background-color: grey;
+}
+
+.modal select {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.new-project-name {
+  width: 200px;
+  margin: 10px auto;
+}
+
+.projectType {
+  border: 1px darkblue solid;
+  height: 100px;
+  width: 100px;
+  margin: 0 5px;
+}
+
+.projectTypeSelect {
+  display: flex;
+  justify-content: center;
+}
+
+.selectedProject {
+  background-color: black;
+  color: white;
+}
+
+#something {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
