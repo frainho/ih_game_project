@@ -666,7 +666,6 @@ function main() {
           "'>";
         mainGameCProjectData.innerHTML = url;
       }, 4000);
-      console.log(intervalID);
     };
     request.send();
   }
@@ -702,8 +701,7 @@ function main() {
   }
 
   /* 
-  
-  
+    Loads canvas on center screen and stops gif streaming
   */
 
   function cArk(event) {
