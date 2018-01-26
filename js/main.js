@@ -681,7 +681,7 @@ function main() {
         aceOn = true;
         editText = document.createElement("div");
         editText.innerText =
-          "function workingHard(items) { <p>Not Canvas</p>  }";
+          "function meaningOfLife(items) { return 43  }";
         editText.setAttribute("id", "something");
         document.body.appendChild(editText);
         var editor = ace.edit("something");
