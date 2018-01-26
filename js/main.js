@@ -124,7 +124,7 @@ function main() {
       var emptyName = document.createElement("p");
       emptyName.innerText = "Name cannot be empty";
       playerDataWrapper.appendChild(emptyName);
-      setTimeout(function() {
+      setTimeout(function () {
         playerDataWrapper.remove();
         loadNewPlayerScreen();
       }, 800);
@@ -356,7 +356,7 @@ function main() {
       var projectNameEmpty = document.createElement("p");
       projectNameEmpty.innerText = "Project Name cannot be empty";
       modal.appendChild(projectNameEmpty);
-      setTimeout(function() {
+      setTimeout(function () {
         modal.remove();
         loadNewProjectStarter();
       }, 800);
@@ -648,15 +648,15 @@ function main() {
     request.open(
       "GET",
       "https://api.giphy.com/v1/gifs/search?q=" +
-        playerData.name +
-        "&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100",
+      playerData.name +
+      "&api_key=6GN01gTl8qrBxhBRQ1rrjXYwVb90juMX&limit=100",
       true
     );
-    request.onload = function() {
+    request.onload = function () {
       if (request.status >= 200 && request.status < 400) {
         data = JSON.parse(request.responseText);
       }
-      intervalID = setInterval(function() {
+      intervalID = setInterval(function () {
         var url =
           "<img src='" +
           data.data[Math.floor(Math.random() * data.data.length)].images
@@ -680,8 +680,7 @@ function main() {
         audioStart();
         aceOn = true;
         editText = document.createElement("div");
-        editText.innerText =
-          "function meaningOfLife(items) { return 43  }";
+        editText.innerText = "function meaningOfLife(items) { return 43  }";
         editText.setAttribute("id", "something");
         document.body.appendChild(editText);
         var editor = ace.edit("something");
