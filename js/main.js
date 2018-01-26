@@ -30,7 +30,8 @@ function main() {
     editText,
     mySound,
     canvas,
-    intervalID;
+    intervalID,
+    upgradeSpeedBtn;
   var keystrokes = 0;
   var aceOn = false;
   var soundOn = true;
@@ -469,7 +470,7 @@ function main() {
     skillsWrap.appendChild(currentSpeed);
     skillsWrap.appendChild(upgradeCost);
 
-    var upgradeSpeedBtn = document.createElement("button");
+    upgradeSpeedBtn = document.createElement("button");
     upgradeSpeedBtn.innerText = "Upgrade Speed";
     upgradeSpeedBtn.addEventListener("click", upgradePlayer);
 
@@ -489,9 +490,6 @@ function main() {
       noMoneyText.innerText =
         "Not enough money for this upgrade. Come back later!";
       modal.appendChild(noMoneyText);
-      setTimeout(function() {
-        backToMainMenu();
-      }, 800);
     } else {
       playerData.money -= playerData.upgradeCost;
       playerData.upgradeCost = playerData.upgradeCost * 2;
@@ -499,10 +497,8 @@ function main() {
       var costInfo = document.createElement("p");
       costInfo.innerText = "Thank you for upgrading";
       modal.appendChild(costInfo);
-      setTimeout(function() {
-        backToMainMenu();
-      }, 800);
     }
+    upgradeSpeedBtn.addEventListener("click", upgradePlayer);
   }
 
   /* 
@@ -592,9 +588,11 @@ function main() {
     modal.remove();
     if (currentProject == undefined) {
       createMainGameScreen();
+      modalBtn.removeEventListener("click", backToMainMenu);
     } else {
       createMainGameScreen();
       updateMainScreen();
+      modalBtn.removeEventListener("click", backToMainMenu);
     }
   }
 
